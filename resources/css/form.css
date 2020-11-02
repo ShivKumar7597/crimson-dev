@@ -1,0 +1,5 @@
+.form-input.error,
+.form-textarea.error,
+.form-select.error {
+  @apply .border-red-600;
+}
