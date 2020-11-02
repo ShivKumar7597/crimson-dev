@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Inertia\Inertia;
 use App\Models\Product;
+use App\Models\Accessories;
 use App\Models\StockMethod;
 use App\Models\ProductGroup;
 use App\Models\ResourceType;
@@ -29,6 +30,7 @@ class ProductController extends Controller
 
     public function index()
     {
+
 
         $user = User::find(Auth::user()->id);
 
@@ -69,6 +71,7 @@ class ProductController extends Controller
                         'alternative_products' => $product->alternativeProducts
                     ];
                 }),
+
             'lastSyncedDate' => $user->getLastSyncDate(),
             'allowedStockTypes' => AllowedStockType::all(),
             'stockMethodTypes' => StockMethod::all(),
@@ -81,9 +84,8 @@ class ProductController extends Controller
 
     public function update(ProductRequest $request, Product $product)
     {
-        // Get the product group
+
         $productGroup = ProductGroup::findOrFail($request['product_group_id']);
-        
         $currentRmsId = $product->currentRmsId;
 
         $product = $product->update([
@@ -103,6 +105,7 @@ class ProductController extends Controller
             'sub_rental_rate_definition_id' => $request->sub_rental_rate_definition,
             'purchase_cost_group_id' => $request->purchase_cost_group,
         ]);
+
 
         $data = [
             'product' => [

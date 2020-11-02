@@ -126,6 +126,21 @@ class Product extends Model
         });
     }
 
+    public function selectFilter($query, $name, $categories)
+    {
+        $query->when($filters['search'] ?? null, function ($query, $search) {
+            $query->where(function ($query) use ($search) {
+                $query->where('name', 'like', '%' . $search . '%')
+                    ->orWhere('allowed_stock_type_name', 'like', '%' . $search . '%')
+                    ->orWhere('purchase_price', 'like', '%' . $search . '%')
+                    ->orWhere('weight', 'like', '%' . $search . '%')
+                    ->orWhereHas('productGroup', function ($query) use ($search) {
+                        $query->where('name', 'like', '%' . $search . '%');
+                    });
+            });
+        });
+    }
+
     /**
      * Get all the products from the Current RMS for the first time
      * return the collection of the products
