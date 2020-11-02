@@ -6903,12 +6903,11 @@ __webpack_require__.r(__webpack_exports__);
     submit: function submit() {
       var _this = this;
 
-      this.$v.$touch();
-
-      if (this.$v.$invalid) {
-        return;
-      }
-
+      // this.$v.$touch();
+      // if (this.$v.$invalid) {
+      //     alert
+      //     return;
+      // }
       this.$inertia.put(this.route("products.update", this.product.id), this.form, {
         onStart: function onStart() {
           return _this.sending = true;
