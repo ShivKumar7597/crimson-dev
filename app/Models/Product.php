@@ -145,4 +145,13 @@ class Product extends Model
 
         return $product_collections;
     }
+
+
+    public static function updateProductRms($api_token, $sub_domain, $data, $prod_id)
+    {
+        $client = new CurrentRmsService($api_token, $sub_domain);
+        $client->put('put','products',$prod_id,$data);
+
+        return $client;
+    }
 }

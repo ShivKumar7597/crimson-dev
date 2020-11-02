@@ -83,6 +83,8 @@ class ProductController extends Controller
     {
         // Get the product group
         $productGroup = ProductGroup::findOrFail($request['product_group_id']);
+        
+        $currentRmsId = $product->currentRmsId;
 
         $product = $product->update([
             'name' => $request->name,
@@ -102,7 +104,34 @@ class ProductController extends Controller
             'purchase_cost_group_id' => $request->purchase_cost_group,
         ]);
 
-        return Redirect::back()->with('success', 'Product updated.');
+        $data = [
+            'product' => [
+            'name' => $request->name,
+            'description' => $request->description,
+            'stock_method' => $request->stock_method,
+            'weight' => $request->weight,
+            'product_group_id' => $request->product_group_id,
+            'purchase_price' => $request->purchase_price,
+            'sub_rental_price' => $request->sub_rental_price,
+            'allowed_stock_type' => $request->allowed_stock_type,
+            'replacement_charge' => $request->replacement_charge,
+            'current_product_group_id' => $productGroup->currentRmsId,
+            'rental_revenue_group_id' => $request->rental_revenue_group,
+            'sale_revenue_group_id' => $request->sale_revenue_group,
+            'sub_rental_cost_group_id' => $request->sub_rental_cost_group,
+            'sub_rental_rate_definition_id' => $request->sub_rental_rate_definition,
+            'purchase_cost_group_id' => $request->purchase_cost_group,
+                "assigned_inspection_ids" => [
+                    $currentRmsId
+                ]
+            ]
+        ];
+
+
+         $user = User::find(Auth::user()->id);
+         Product::updateProductRms($user->api_token, $user->sub_domain , $data, $currentRmsId);
+
+         return Redirect::back()->with('success', 'Product updated.');
     }
 
     public function syncProducts()
