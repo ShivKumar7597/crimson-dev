@@ -413,7 +413,6 @@ export default {
         submit() {
             // this.$v.$touch();
             // if (this.$v.$invalid) {
-            //     alert
             //     return;
             // }
             this.$inertia.put(

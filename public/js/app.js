@@ -6905,7 +6905,6 @@ __webpack_require__.r(__webpack_exports__);
 
       // this.$v.$touch();
       // if (this.$v.$invalid) {
-      //     alert
       //     return;
       // }
       this.$inertia.put(this.route("products.update", this.product.id), this.form, {

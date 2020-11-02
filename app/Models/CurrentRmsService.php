@@ -43,10 +43,41 @@ class CurrentRmsService{
 		return $this->build('get', $stub, $params, $array);
 	}
 
+
+	public function put($stub, $params, $id, $data)
+	{
+
+		return $this->updatebuild('put', $params, $id, $data);
+	}
+
     public function build($method, $stub, $params, $array = array())
 	{
+		
 		try {
 			$path = $stub."?".$this->params($params);
+
+			
+
+			// do live request
+            $data = $this->client->request($method, $path, ['json' => $array])->getBody()->getContents();
+
+			// json_decode the object
+            return json_decode($data, true);
+            
+		} catch (ClientException | RequestException $e) {
+             //dd($e);
+            $response = $e->getResponse();
+            throw new \Exception("Something failed: { $response->getStatusCode() } ");
+	 	} 
+    }
+
+     public function updatebuild($method, $stub, $params, $array = array())
+	{
+		
+		try {
+			$path = $stub."/".$params;
+
+			
 
 			// do live request
             $data = $this->client->request($method, $path, ['json' => $array])->getBody()->getContents();
