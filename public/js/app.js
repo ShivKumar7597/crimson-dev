@@ -3572,6 +3572,43 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 
@@ -3597,6 +3634,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       sending: false,
       selectedType: [],
+      category: [],
       columnHeaders: [{
         text: "Name",
         value: "name"
@@ -3635,7 +3673,9 @@ __webpack_require__.r(__webpack_exports__);
         value: "alternative_products"
       }],
       form: {
-        search: this.filters.search
+        search: this.filters.search,
+        prd: [] // productGroups:null,
+
       },
       currentSort: "name",
       currentSortDir: "asc"
@@ -3708,7 +3748,28 @@ __webpack_require__.r(__webpack_exports__);
           return _this2.sending = false;
         }
       });
+    },
+    submit: function submit() {
+      var _this3 = this;
+
+      this.$inertia.visit(this.route("products.select", this.category), {
+        method: "post",
+        onStart: function onStart() {
+          return _this3.sending = true;
+        },
+        onFinish: function onFinish() {
+          return _this3.sending = false;
+        }
+      });
     }
+    /* selectProducts: function() {
+       this.$inertia.visit(this.route("products.select"), {
+            method: "post",
+            onStart: () => (this.sending = true),
+            onFinish: () => (this.sending = false)
+        });
+    },*/
+
   }
 });
 
@@ -33269,149 +33330,385 @@ var render = function() {
                                           fn: function() {
                                             return [
                                               _c(
-                                                "div",
-                                                { staticClass: "p-6" },
+                                                "form",
+                                                {
+                                                  on: {
+                                                    submit: function($event) {
+                                                      $event.preventDefault()
+                                                      return _vm.submit($event)
+                                                    }
+                                                  }
+                                                },
                                                 [
                                                   _c(
                                                     "div",
-                                                    {
-                                                      staticClass:
-                                                        "flex justify-between mb-8"
-                                                    },
+                                                    { staticClass: "p-6" },
                                                     [
                                                       _c(
                                                         "div",
-                                                        { staticClass: "mr-6" },
+                                                        {
+                                                          staticClass:
+                                                            "flex justify-between mb-8"
+                                                        },
                                                         [
                                                           _c(
-                                                            "p",
+                                                            "div",
                                                             {
                                                               staticClass:
-                                                                "font-sans text-lg text-gray-800"
+                                                                "mr-6"
+                                                            },
+                                                            [
+                                                              _c(
+                                                                "p",
+                                                                {
+                                                                  staticClass:
+                                                                    "font-sans text-lg text-gray-800"
+                                                                },
+                                                                [
+                                                                  _vm._v(
+                                                                    "\n                                                    Categories\n                                                "
+                                                                  )
+                                                                ]
+                                                              ),
+                                                              _vm._v(" "),
+                                                              _c(
+                                                                "div",
+                                                                {
+                                                                  staticClass:
+                                                                    "mt-4 w-48 h-64 overflow-y-auto border border-gray-500 p-4"
+                                                                },
+                                                                _vm._l(
+                                                                  _vm.productGroups,
+                                                                  function(
+                                                                    item
+                                                                  ) {
+                                                                    return _c(
+                                                                      "div",
+                                                                      {
+                                                                        key:
+                                                                          item.value,
+                                                                        staticClass:
+                                                                          "block px-4 py-2 text-md text-gray-800 "
+                                                                      },
+                                                                      [
+                                                                        _c(
+                                                                          "label",
+                                                                          {
+                                                                            staticClass:
+                                                                              "mt-2 flex items-center"
+                                                                          },
+                                                                          [
+                                                                            _c(
+                                                                              "input",
+                                                                              {
+                                                                                directives: [
+                                                                                  {
+                                                                                    name:
+                                                                                      "model",
+                                                                                    rawName:
+                                                                                      "v-model",
+                                                                                    value:
+                                                                                      _vm.category,
+                                                                                    expression:
+                                                                                      "category"
+                                                                                  }
+                                                                                ],
+                                                                                staticClass:
+                                                                                  "form-checkbox",
+                                                                                attrs: {
+                                                                                  type:
+                                                                                    "checkbox"
+                                                                                },
+                                                                                domProps: {
+                                                                                  value:
+                                                                                    item.id,
+                                                                                  checked: Array.isArray(
+                                                                                    _vm.category
+                                                                                  )
+                                                                                    ? _vm._i(
+                                                                                        _vm.category,
+                                                                                        item.id
+                                                                                      ) >
+                                                                                      -1
+                                                                                    : _vm.category
+                                                                                },
+                                                                                on: {
+                                                                                  change: function(
+                                                                                    $event
+                                                                                  ) {
+                                                                                    var $$a =
+                                                                                        _vm.category,
+                                                                                      $$el =
+                                                                                        $event.target,
+                                                                                      $$c = $$el.checked
+                                                                                        ? true
+                                                                                        : false
+                                                                                    if (
+                                                                                      Array.isArray(
+                                                                                        $$a
+                                                                                      )
+                                                                                    ) {
+                                                                                      var $$v =
+                                                                                          item.id,
+                                                                                        $$i = _vm._i(
+                                                                                          $$a,
+                                                                                          $$v
+                                                                                        )
+                                                                                      if (
+                                                                                        $$el.checked
+                                                                                      ) {
+                                                                                        $$i <
+                                                                                          0 &&
+                                                                                          (_vm.category = $$a.concat(
+                                                                                            [
+                                                                                              $$v
+                                                                                            ]
+                                                                                          ))
+                                                                                      } else {
+                                                                                        $$i >
+                                                                                          -1 &&
+                                                                                          (_vm.category = $$a
+                                                                                            .slice(
+                                                                                              0,
+                                                                                              $$i
+                                                                                            )
+                                                                                            .concat(
+                                                                                              $$a.slice(
+                                                                                                $$i +
+                                                                                                  1
+                                                                                              )
+                                                                                            ))
+                                                                                      }
+                                                                                    } else {
+                                                                                      _vm.category = $$c
+                                                                                    }
+                                                                                  }
+                                                                                }
+                                                                              }
+                                                                            ),
+                                                                            _vm._v(
+                                                                              " "
+                                                                            ),
+                                                                            _c(
+                                                                              "span",
+                                                                              {
+                                                                                staticClass:
+                                                                                  "ml-2"
+                                                                              },
+                                                                              [
+                                                                                _vm._v(
+                                                                                  _vm._s(
+                                                                                    item.name
+                                                                                  )
+                                                                                )
+                                                                              ]
+                                                                            )
+                                                                          ]
+                                                                        )
+                                                                      ]
+                                                                    )
+                                                                  }
+                                                                ),
+                                                                0
+                                                              )
+                                                            ]
+                                                          ),
+                                                          _vm._v(" "),
+                                                          _c("div", [
+                                                            _c(
+                                                              "p",
+                                                              {
+                                                                staticClass:
+                                                                  "font-sans text-lg text-gray-800"
+                                                              },
+                                                              [
+                                                                _vm._v(
+                                                                  "\n                                                    Blank Field\n                                                "
+                                                                )
+                                                              ]
+                                                            ),
+                                                            _vm._v(" "),
+                                                            _c(
+                                                              "div",
+                                                              {
+                                                                staticClass:
+                                                                  "mt-4 p-4 w-48 h-64 overflow-y-auto border border-gray-500"
+                                                              },
+                                                              _vm._l(
+                                                                _vm.columnHeaders,
+                                                                function(item) {
+                                                                  return _c(
+                                                                    "div",
+                                                                    {
+                                                                      staticClass:
+                                                                        "block px-4 py-2 text-md text-gray-800"
+                                                                    },
+                                                                    [
+                                                                      _c(
+                                                                        "label",
+                                                                        {
+                                                                          staticClass:
+                                                                            "mt-2 flex items-center"
+                                                                        },
+                                                                        [
+                                                                          _c(
+                                                                            "input",
+                                                                            {
+                                                                              directives: [
+                                                                                {
+                                                                                  name:
+                                                                                    "model",
+                                                                                  rawName:
+                                                                                    "v-model",
+                                                                                  value:
+                                                                                    _vm.category,
+                                                                                  expression:
+                                                                                    "category"
+                                                                                }
+                                                                              ],
+                                                                              staticClass:
+                                                                                "form-checkbox",
+                                                                              attrs: {
+                                                                                type:
+                                                                                  "checkbox"
+                                                                              },
+                                                                              domProps: {
+                                                                                value:
+                                                                                  item.text,
+                                                                                checked: Array.isArray(
+                                                                                  _vm.category
+                                                                                )
+                                                                                  ? _vm._i(
+                                                                                      _vm.category,
+                                                                                      item.text
+                                                                                    ) >
+                                                                                    -1
+                                                                                  : _vm.category
+                                                                              },
+                                                                              on: {
+                                                                                change: function(
+                                                                                  $event
+                                                                                ) {
+                                                                                  var $$a =
+                                                                                      _vm.category,
+                                                                                    $$el =
+                                                                                      $event.target,
+                                                                                    $$c = $$el.checked
+                                                                                      ? true
+                                                                                      : false
+                                                                                  if (
+                                                                                    Array.isArray(
+                                                                                      $$a
+                                                                                    )
+                                                                                  ) {
+                                                                                    var $$v =
+                                                                                        item.text,
+                                                                                      $$i = _vm._i(
+                                                                                        $$a,
+                                                                                        $$v
+                                                                                      )
+                                                                                    if (
+                                                                                      $$el.checked
+                                                                                    ) {
+                                                                                      $$i <
+                                                                                        0 &&
+                                                                                        (_vm.category = $$a.concat(
+                                                                                          [
+                                                                                            $$v
+                                                                                          ]
+                                                                                        ))
+                                                                                    } else {
+                                                                                      $$i >
+                                                                                        -1 &&
+                                                                                        (_vm.category = $$a
+                                                                                          .slice(
+                                                                                            0,
+                                                                                            $$i
+                                                                                          )
+                                                                                          .concat(
+                                                                                            $$a.slice(
+                                                                                              $$i +
+                                                                                                1
+                                                                                            )
+                                                                                          ))
+                                                                                    }
+                                                                                  } else {
+                                                                                    _vm.category = $$c
+                                                                                  }
+                                                                                }
+                                                                              }
+                                                                            }
+                                                                          ),
+                                                                          _vm._v(
+                                                                            " "
+                                                                          ),
+                                                                          _c(
+                                                                            "span",
+                                                                            {
+                                                                              staticClass:
+                                                                                "ml-2"
+                                                                            },
+                                                                            [
+                                                                              _vm._v(
+                                                                                _vm._s(
+                                                                                  item.text
+                                                                                )
+                                                                              )
+                                                                            ]
+                                                                          )
+                                                                        ]
+                                                                      )
+                                                                    ]
+                                                                  )
+                                                                }
+                                                              ),
+                                                              0
+                                                            )
+                                                          ])
+                                                        ]
+                                                      ),
+                                                      _vm._v(" "),
+                                                      _c(
+                                                        "div",
+                                                        {
+                                                          staticClass:
+                                                            "flex justify-center"
+                                                        },
+                                                        [
+                                                          _c(
+                                                            "button",
+                                                            {
+                                                              staticClass:
+                                                                "mr-2 rounded-full border-2 border-red-500 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5",
+                                                              attrs: {
+                                                                type: "button"
+                                                              }
                                                             },
                                                             [
                                                               _vm._v(
-                                                                "\n                                                    Categories\n                                                "
+                                                                "\n                                           Reset\n                                            "
                                                               )
                                                             ]
                                                           ),
                                                           _vm._v(" "),
                                                           _c(
-                                                            "div",
+                                                            "button",
                                                             {
                                                               staticClass:
-                                                                "mt-4 w-48 h-64 overflow-y-auto border border-gray-500 p-4"
+                                                                "rounded-full border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5",
+                                                              attrs: {
+                                                                type: "submit"
+                                                              }
                                                             },
                                                             [
-                                                              _vm._l(
-                                                                _vm.productGroups,
-                                                                function(item) {
-                                                                  return [
-                                                                    _c(
-                                                                      "filter-columns",
-                                                                      {
-                                                                        key:
-                                                                          item.id,
-                                                                        attrs: {
-                                                                          value:
-                                                                            item.id,
-                                                                          label:
-                                                                            item.name
-                                                                        }
-                                                                      }
-                                                                    )
-                                                                  ]
-                                                                }
+                                                              _vm._v(
+                                                                "\n                                            Apply " +
+                                                                  _vm._s(
+                                                                    _vm.category
+                                                                  ) +
+                                                                  "\n                                            "
                                                               )
-                                                            ],
-                                                            2
-                                                          )
-                                                        ]
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c("div", [
-                                                        _c(
-                                                          "p",
-                                                          {
-                                                            staticClass:
-                                                              "font-sans text-lg text-gray-800"
-                                                          },
-                                                          [
-                                                            _vm._v(
-                                                              "\n                                                    Blank Field\n                                                "
-                                                            )
-                                                          ]
-                                                        ),
-                                                        _vm._v(" "),
-                                                        _c(
-                                                          "div",
-                                                          {
-                                                            staticClass:
-                                                              "mt-4 p-4 w-48 h-64 overflow-y-auto border border-gray-500"
-                                                          },
-                                                          [
-                                                            _vm._l(
-                                                              _vm.columnHeaders,
-                                                              function(item) {
-                                                                return [
-                                                                  _c(
-                                                                    "filter-columns",
-                                                                    {
-                                                                      key:
-                                                                        item.name,
-                                                                      attrs: {
-                                                                        value:
-                                                                          item.name,
-                                                                        label:
-                                                                          item.text
-                                                                      }
-                                                                    }
-                                                                  )
-                                                                ]
-                                                              }
-                                                            )
-                                                          ],
-                                                          2
-                                                        )
-                                                      ])
-                                                    ]
-                                                  ),
-                                                  _vm._v(" "),
-                                                  _c(
-                                                    "div",
-                                                    {
-                                                      staticClass:
-                                                        "flex justify-center"
-                                                    },
-                                                    [
-                                                      _c(
-                                                        "button",
-                                                        {
-                                                          staticClass:
-                                                            "mr-2 rounded-full border-2 border-red-500 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5",
-                                                          attrs: {
-                                                            type: "button"
-                                                          }
-                                                        },
-                                                        [
-                                                          _vm._v(
-                                                            "\n                                                Reset\n                                            "
-                                                          )
-                                                        ]
-                                                      ),
-                                                      _vm._v(" "),
-                                                      _c(
-                                                        "button",
-                                                        {
-                                                          staticClass:
-                                                            "rounded-full border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5",
-                                                          attrs: {
-                                                            type: "button"
-                                                          }
-                                                        },
-                                                        [
-                                                          _vm._v(
-                                                            "\n                                                Apply\n                                            "
+                                                            ]
                                                           )
                                                         ]
                                                       )
@@ -33426,7 +33723,7 @@ var render = function() {
                                       ],
                                       null,
                                       false,
-                                      2364744313
+                                      490555228
                                     )
                                   })
                                 ],

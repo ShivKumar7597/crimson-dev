@@ -137,6 +137,14 @@ class ProductController extends Controller
          return Redirect::back()->with('success', 'Product updated.');
     }
 
+    public function selectProducts(Request $request){
+        
+       echo"inside";
+       echo"<pre>";
+       print_r(Request::all());
+        exit;
+    }
+    
     public function syncProducts()
     {
         // Check if the product has been synced

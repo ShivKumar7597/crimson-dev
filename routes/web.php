@@ -36,6 +36,10 @@ Route::get('/sync-products', [ProductController::class, 'syncProducts'])
     ->name('products.sync')
     ->middleware(['auth:sanctum', 'verified']);
 
+Route::post('/select-products', [ProductController::class, 'selectProducts'])
+    ->name('products.select')
+    ->middleware(['auth:sanctum', 'verified']);
+
 // Memebr Controller
 Route::get('/members', [MemberController::class, 'index'])
     ->name('members')
@@ -53,6 +57,8 @@ Route::get('/opportunities', [OpportunitiesController::class, 'index'])
 Route::get('/sync-opportunities', [OpportunitiesController::class, 'syncOpportunities'])
     ->name('opportunities.sync')
     ->middleware(['auth:sanctum', 'verified']);
+
+
 
 
 

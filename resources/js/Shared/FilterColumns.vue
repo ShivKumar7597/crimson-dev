@@ -27,6 +27,9 @@ export default {
         },
         value: [Number, String],
         label: String
-    }
+    },
+
+
 };
+
 </script>

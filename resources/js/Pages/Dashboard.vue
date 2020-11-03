@@ -95,6 +95,7 @@
                                     </template>
 
                                     <template #content>
+                                        <form @submit.prevent="submit">
                                         <!-- Filter Management -->
                                         <div class="p-6">
                                             <div
@@ -109,17 +110,39 @@
                                                     <div
                                                         class="mt-4 w-48 h-64 overflow-y-auto border border-gray-500 p-4"
                                                     >
-                                                        <template
+
+
+                                                        <!-- <template
                                                             v-for="item in productGroups"
                                                         >
                                                             <filter-columns
                                                                 :key="item.id"
                                                                 :value="item.id"
-                                                                :label="
-                                                                    item.name
-                                                                "
+                                                                :label="item.name"
+                                                                
+                                                               
                                                             />
-                                                        </template>
+                                                        </template> -->
+
+                                                         <div
+                                            class="block px-4 py-2 text-md text-gray-800 "
+                                            v-for="item in productGroups"
+                                            :key="item.value"
+                                        >
+                                            <label
+                                                class="mt-2 flex items-center"
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    class="form-checkbox"
+                                                    :value="item.id"
+                                                    v-model="category"
+                                                />
+                                                <span class="ml-2">{{
+                                                    item.name
+                                                }}</span>
+                                            </label>
+                                        </div>
                                                     </div>
                                                 </div>
                                                 <div>
@@ -128,7 +151,7 @@
                                                     >
                                                         Blank Field
                                                     </p>
-                                                    <div
+                                                    <!-- <div
                                                         class="mt-4 p-4 w-48 h-64 overflow-y-auto border border-gray-500"
                                                     >
                                                         <template
@@ -139,31 +162,45 @@
                                                                 :value="
                                                                     item.name
                                                                 "
-                                                                :label="
-                                                                    item.text
-                                                                "
+                                                                :v-model="item.text"
+                                                                :label="item.text"
+                                                               
                                                             />
                                                         </template>
-                                                    </div>
+                                                    </div> -->
+                                       <div class="mt-4 p-4 w-48 h-64 overflow-y-auto border border-gray-500">
+                                        <div class="block px-4 py-2 text-md text-gray-800" v-for="item in columnHeaders">
+                                            <label
+                                                class="mt-2 flex items-center"
+                                            >
+                                                <input
+                                                    type="checkbox"
+                                                    class="form-checkbox"
+                                                    :value="item.text"
+                                                    v-model="category"
+                                                />
+                                                <span class="ml-2">{{
+                                                    item.text
+                                                }}</span>
+                                            </label>
+                                        </div></div>
                                                 </div>
                                             </div>
 
                                             <!-- Buttons section -->
                                             <div class="flex justify-center">
-                                                <button
-                                                    type="button"
-                                                    class="mr-2 rounded-full border-2 border-red-500 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5"
+                                                <button type="button" class="mr-2 rounded-full border-2 border-red-500 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5"
                                                 >
-                                                    Reset
+                                               Reset
                                                 </button>
-                                                <button
-                                                    type="button"
-                                                    class="rounded-full border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5"
-                                                >
-                                                    Apply
+                                                <button 
+                                                
+                                                type="submit" class="rounded-full border border-transparent px-4 py-2 bg-red-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+                                                Apply {{category}}
                                                 </button>
                                             </div>
                                         </div>
+                                        </form>
                                     </template>
                                 </jet-dropdown>
                             </div>
@@ -173,7 +210,7 @@
                             <div
                                 class="flex items-center text-lg font-bold leading-5 sm:mr-6"
                             >
-                                <search-filter v-model="form.search">
+                                 <search-filter v-model="form.search">
                                 </search-filter>
                             </div>
                         </template>
@@ -371,6 +408,7 @@ export default {
         return {
             sending: false,
             selectedType: [],
+            category: [],
             columnHeaders: [
                 { text: "Name", value: "name" },
                 { text: "Description", value: "description" },
@@ -389,7 +427,10 @@ export default {
                 { text: "Alternative Products", value: "alternative_products" }
             ],
             form: {
-                search: this.filters.search
+                search: this.filters.search,
+                prd:[],
+               // productGroups:null,
+
             },
             currentSort: "name",
             currentSortDir: "asc"
@@ -412,6 +453,7 @@ export default {
 
     computed: {
         visibleColumns() {
+
             if (this.selectedType.length === 0) {
                 return this.columnHeaders.map(c => c.value);
             }
@@ -430,6 +472,8 @@ export default {
                 return 0;
             });
         }
+
+       
     },
 
     watch: {
@@ -466,7 +510,24 @@ export default {
                 onStart: () => (this.sending = true),
                 onFinish: () => (this.sending = false)
             });
-        }
+        },
+
+
+        submit() {
+            this.$inertia.visit(this.route("products.select",this.category), {
+                method: "post",
+                onStart: () => (this.sending = true),
+                onFinish: () => (this.sending = false)
+            });
+        },
+        /* selectProducts: function() {
+           this.$inertia.visit(this.route("products.select"), {
+                method: "post",
+                onStart: () => (this.sending = true),
+                onFinish: () => (this.sending = false)
+            });
+        },*/
     }
 };
+
 </script>
